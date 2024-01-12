@@ -7,13 +7,26 @@
 4-Sütunların her birine göre ilgili satırı silecek 5 adet DELETE işlemi yapalım.
 */
 
-SELECT * FROM EMPLOYEE WHERE ID= 2
 
-INSERT INTO EMPLOYEE (NAME, BIRTHDAY, EMAIL) VALUES ( 'Fawne', '2023-06-11', 'fclunie0@ebay.co.uk');
-INSERT INTO EMPLOYEE (NAME, BIRTHDAY, EMAIL) VALUES ( 'Albertine', '2023-03-20', 'aghidotti1@squarespace.com');
-INSERT INTO EMPLOYEE (NAME, BIRTHDAY, EMAIL) VALUES ( 'Care', '2023-01-18', 'chanse2@linkedin.com');
-INSERT INTO EMPLOYEE (NAME, BIRTHDAY, EMAIL) VALUES ( 'Carlyle', '2023-05-27', 'ctorrisi3@hostgator.com');
-INSERT INTO EMPLOYEE (NAME, BIRTHDAY, EMAIL) VALUES ( 'Leeland', '2024-01-04', 'lcotes4@cbslocal.com');
+CREATE TABLE EMPLOYEE(
+  ID SERIAL PRIMARY KEY,
+  NAME VARCHAR(50) NOT NULL UNIQUE ,
+  BIRTHDAY DATE CHECK (EXTRACT(YEAR FROM BIRTHDAY) > 2000),
+  EMAIL VARCHAR(100) CHECK (POSITION('@' IN EMAIL) > 0) 
+)
+
+CREATE TABLE COMPANY(
+    ID SERIAL PRIMARY KEY,
+    EMPLOYEE_ID INTEGER REFERENCES EMPLOYEE(id)
+)
+
+
+INSERT INTO EMPLOYEE (NAME, BIRTHDAY, EMAIL) VALUES 
+ ( 'Fawne', '1990-06-11', 'fclunie0@ebay.co.uk');
+ ( 'Albertine', '2023-03-20', 'aghidotti1@squarespace.com');
+ ( 'Care', '2020-01-18', 'chanse2@linkedin.com');
+ ( 'Carlyle', '21997-05-27', 'ctorrisi3@hostgator.com');
+ ( 'Leeland', '2024-01-04', 'lcotes4@cbslocal.com');
 
 
 UPDATE EMPLOYEE SET NAME = 'Albertine' , BIRTHDAY = '2023-03-20' , EMAIL = 'aghidotti1@squarespace.com' WHERE NAME = 'Fawne';
